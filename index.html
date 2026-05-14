@@ -154,7 +154,7 @@
             }
         }
 
-        /* LOADER */
+        /* ===================== LOADER ===================== */
         #loader {
             position: fixed;
             inset: 0;
@@ -166,6 +166,7 @@
             justify-content: center;
             gap: 32px;
             transition: opacity 0.6s ease, visibility 0.6s ease;
+            overflow: hidden;
         }
 
         #loader.hide {
@@ -174,7 +175,30 @@
             pointer-events: none;
         }
 
+        /* Neural canvas sits inside loader, full cover */
+        #loader-canvas {
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* Grid overlay inside loader */
+        #loader::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: linear-gradient(rgba(59, 130, 246, 0.035) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(59, 130, 246, 0.035) 1px, transparent 1px);
+            background-size: 55px 55px;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* All loader text/bar content above canvas */
         .loader-logo {
+            position: relative;
+            z-index: 2;
             font-family: var(--syne);
             font-weight: 800;
             font-size: 2.8rem;
@@ -189,6 +213,8 @@
         }
 
         .loader-bottom {
+            position: relative;
+            z-index: 2;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -237,6 +263,8 @@
             color: var(--accent2);
             min-width: 36px;
         }
+
+        /* ===================== END LOADER ===================== */
 
         /* REVEAL */
         .reveal {
@@ -660,7 +688,6 @@
             border-color: var(--accent);
         }
 
-        /* ABOUT IMAGE — SVG neural art, transparent bg */
         .about-visual {
             position: relative;
             display: flex;
@@ -858,7 +885,6 @@
             height: 100%;
         }
 
-        /* Project image */
         .project-img-wrap {
             position: relative;
             width: 100%;
@@ -970,7 +996,6 @@
             text-transform: uppercase;
             color: var(--accent2);
             text-decoration: none;
-            transition: gap 0.2s;
             border-bottom: 1px solid transparent;
             padding-bottom: 2px;
             transition: all 0.2s;
@@ -1204,7 +1229,20 @@
             margin-bottom: 10px;
         }
 
-        .exp-badge {
+        /* Updated Badge Styles */
+        .exp-badge-year {
+            display: inline-block;
+            font-size: 9px;
+            font-family: var(--mono);
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            padding: 4px 10px;
+            background: rgba(59, 130, 246, 0.15);
+            border: 1px solid rgba(59, 130, 246, 0.5);
+            color: var(--accent2);
+        }
+
+        .exp-badge-month {
             display: inline-block;
             font-size: 9px;
             font-family: var(--mono);
@@ -1305,6 +1343,11 @@
             color: var(--white);
             line-height: 1.3;
             margin-bottom: 10px;
+        }
+
+        /* Added spacing between logo and cert name */
+        .cert-card .logo-box {
+            margin-bottom: 24px;
         }
 
         .cert-date {
@@ -1510,6 +1553,7 @@
 
     <!-- LOADER -->
     <div id="loader">
+        <canvas id="loader-canvas"></canvas>
         <div class="loader-logo">Asad <span>Aziz</span></div>
         <div class="loader-bottom">
             <div class="loader-bar-row">
@@ -1608,147 +1652,105 @@
                 </div>
             </div>
             <div class="about-visual reveal">
-                <!-- SVG Neural Network Art — transparent bg, visible design -->
                 <div class="about-svg-wrap">
                     <div class="about-svg-wrap">
                         <svg width="340" height="300" viewBox="0 0 340 300" xmlns="http://www.w3.org/2000/svg">
-
                             <defs>
-                                <!-- Background -->
                                 <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
                                     <stop offset="0%" stop-color="#020617" />
                                     <stop offset="100%" stop-color="#0f172a" />
                                 </linearGradient>
-
-                                <!-- Orb -->
                                 <radialGradient id="orb">
                                     <stop offset="0%" stop-color="#ffffff" stop-opacity="0.95" />
                                     <stop offset="0.2" stop-color="#93c5fd" stop-opacity="0.8" />
                                     <stop offset="0.5" stop-color="#3b82f6" stop-opacity="0.35" />
                                     <stop offset="1" stop-color="#3b82f6" stop-opacity="0" />
                                 </radialGradient>
-
-                                <!-- Glass -->
                                 <linearGradient id="glass" x1="0%" y1="0%" x2="100%" y2="100%">
                                     <stop offset="0%" stop-color="rgba(255,255,255,0.25)" />
                                     <stop offset="100%" stop-color="rgba(255,255,255,0.04)" />
                                 </linearGradient>
-
                                 <filter id="blur">
                                     <feGaussianBlur stdDeviation="10" />
                                 </filter>
-
                                 <filter id="soft">
                                     <feGaussianBlur stdDeviation="3" />
                                 </filter>
                             </defs>
-
-                            <!-- Background -->
                             <rect width="340" height="300" rx="24" fill="url(#bg)" />
-
-                            <!-- Floating glow particles -->
                             <g opacity="0.6">
                                 <circle cx="55" cy="55" r="2" fill="#93c5fd">
                                     <animate attributeName="cy" values="55;45;55" dur="4s" repeatCount="indefinite" />
                                 </circle>
-
                                 <circle cx="290" cy="70" r="2" fill="#60a5fa">
                                     <animate attributeName="cy" values="70;60;70" dur="3s" repeatCount="indefinite" />
                                 </circle>
-
                                 <circle cx="60" cy="235" r="2" fill="#93c5fd">
                                     <animate attributeName="cy" values="235;225;235" dur="5s"
                                         repeatCount="indefinite" />
                                 </circle>
-
                                 <circle cx="285" cy="240" r="2" fill="#60a5fa">
                                     <animate attributeName="cy" values="240;230;240" dur="4s"
                                         repeatCount="indefinite" />
                                 </circle>
                             </g>
-
-                            <!-- Outer glow -->
                             <circle cx="170" cy="150" r="82" fill="#3b82f6" opacity="0.08" filter="url(#blur)">
                                 <animate attributeName="r" values="82;95;82" dur="5s" repeatCount="indefinite" />
                             </circle>
-
-                            <!-- Main holographic orb -->
                             <circle cx="170" cy="150" r="58" fill="url(#orb)">
                                 <animate attributeName="r" values="58;62;58" dur="4s" repeatCount="indefinite" />
                             </circle>
-
-                            <!-- Glass ring -->
                             <circle cx="170" cy="150" r="72" fill="none" stroke="rgba(255,255,255,0.18)"
                                 stroke-width="1.2" stroke-dasharray="6 8">
                                 <animateTransform attributeName="transform" type="rotate" from="0 170 150"
                                     to="360 170 150" dur="20s" repeatCount="indefinite" />
                             </circle>
-
-                            <!-- Inner ring -->
                             <circle cx="170" cy="150" r="42" fill="none" stroke="rgba(147,197,253,0.35)"
                                 stroke-width="1">
                                 <animateTransform attributeName="transform" type="rotate" from="360 170 150"
                                     to="0 170 150" dur="10s" repeatCount="indefinite" />
                             </circle>
-
-                            <!-- Core -->
                             <circle cx="170" cy="150" r="16" fill="#ffffff" opacity="0.9" />
-
-                            <!-- Orbit nodes -->
                             <g fill="#93c5fd">
                                 <circle cx="170" cy="78" r="4">
                                     <animateTransform attributeName="transform" type="rotate" from="0 170 150"
                                         to="360 170 150" dur="8s" repeatCount="indefinite" />
                                 </circle>
-
                                 <circle cx="242" cy="150" r="4">
                                     <animateTransform attributeName="transform" type="rotate" from="0 170 150"
                                         to="360 170 150" dur="8s" repeatCount="indefinite" />
                                 </circle>
-
                                 <circle cx="170" cy="222" r="4">
                                     <animateTransform attributeName="transform" type="rotate" from="0 170 150"
                                         to="360 170 150" dur="8s" repeatCount="indefinite" />
                                 </circle>
-
                                 <circle cx="98" cy="150" r="4">
                                     <animateTransform attributeName="transform" type="rotate" from="0 170 150"
                                         to="360 170 150" dur="8s" repeatCount="indefinite" />
                                 </circle>
                             </g>
-
-                            <!-- Floating glass cards -->
                             <g>
                                 <rect x="28" y="95" width="58" height="38" rx="10" fill="url(#glass)"
-                                    stroke="rgba(255,255,255,0.08)" backdrop-filter="blur(8px)" />
+                                    stroke="rgba(255,255,255,0.08)" />
                                 <text x="57" y="118" text-anchor="middle" fill="#93c5fd" font-size="10"
                                     font-family="monospace">AI</text>
-
                                 <rect x="254" y="95" width="58" height="38" rx="10" fill="url(#glass)"
                                     stroke="rgba(255,255,255,0.08)" />
                                 <text x="283" y="118" text-anchor="middle" fill="#93c5fd" font-size="10"
                                     font-family="monospace">ML</text>
-
                                 <rect x="40" y="185" width="58" height="38" rx="10" fill="url(#glass)"
                                     stroke="rgba(255,255,255,0.08)" />
                                 <text x="69" y="208" text-anchor="middle" fill="#93c5fd" font-size="10"
                                     font-family="monospace">LLM</text>
-
                                 <rect x="242" y="185" width="58" height="38" rx="10" fill="url(#glass)"
                                     stroke="rgba(255,255,255,0.08)" />
                                 <text x="271" y="208" text-anchor="middle" fill="#93c5fd" font-size="10"
                                     font-family="monospace">RAG</text>
                             </g>
-
-                            <!-- Bottom title -->
                             <text x="170" y="278" text-anchor="middle" fill="rgba(147,197,253,0.45)" font-size="10"
-                                letter-spacing="4" font-family="monospace">
-                                FUTURE • INTELLIGENCE
-                            </text>
-
+                                letter-spacing="4" font-family="monospace">FUTURE • INTELLIGENCE</text>
                         </svg>
                     </div>
-
                 </div>
             </div>
         </div>
@@ -1959,7 +1961,6 @@
             <h2 class="section-title">Selected <em>Work</em></h2>
         </div>
         <div class="projects-grid reveal">
-
             <div class="project-card">
                 <div class="project-img-wrap">
                     <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=800&auto=format&fit=crop"
@@ -1980,15 +1981,13 @@
                             class="project-link">Live App →</a>
                         <span class="project-link-sep">|</span>
                         <a href="https://github.com/Asad-Aziz-001/Sentellect-Learning-Through-Emotions" target="_blank"
-                            class="project-link github">⌥
-                            GitHub</a>
+                            class="project-link github">⌥ GitHub</a>
                     </div>
                 </div>
             </div>
-
             <div class="project-card">
                 <div class="project-img-wrap">
-                    <img src="https://www.app.com.pk/wp-content/uploads/2024/07/ssit-students-scholarship-loans.jpg"
+                    <img src="https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?w=800&q=80"
                         alt="AI Scholar Hunt" loading="lazy" />
                     <div class="project-img-overlay"></div>
                     <div class="project-img-badge">LLM · RAG</div>
@@ -2006,12 +2005,10 @@
                             App →</a>
                         <span class="project-link-sep">|</span>
                         <a href="https://github.com/Asad-Aziz-001/AI-Scholar-Hunt" target="_blank"
-                            class="project-link github">⌥
-                            GitHub</a>
+                            class="project-link github">⌥ GitHub</a>
                     </div>
                 </div>
             </div>
-
             <div class="project-card">
                 <div class="project-img-wrap">
                     <img src="https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=800&q=80"
@@ -2031,12 +2028,10 @@
                             class="project-link">Live App →</a>
                         <span class="project-link-sep">|</span>
                         <a href="https://github.com/Asad-Aziz-001/Brain-Tumor-Detection" target="_blank"
-                            class="project-link github">⌥
-                            GitHub</a>
+                            class="project-link github">⌥ GitHub</a>
                     </div>
                 </div>
             </div>
-
             <div class="project-card">
                 <div class="project-img-wrap">
                     <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80"
@@ -2058,12 +2053,10 @@
                             class="project-link">Live App →</a>
                         <span class="project-link-sep">|</span>
                         <a href="https://github.com/Asad-Aziz-001/Smart-Image-Vision" target="_blank"
-                            class="project-link github">⌥
-                            GitHub</a>
+                            class="project-link github">⌥ GitHub</a>
                     </div>
                 </div>
             </div>
-
         </div>
     </section>
 
@@ -2075,7 +2068,6 @@
             <h2 class="section-title">Academic <em>Background</em></h2>
         </div>
         <div class="edu-grid reveal">
-
             <div class="edu-card">
                 <div class="edu-card-accent"></div>
                 <div class="edu-degree-badge current">
@@ -2111,7 +2103,6 @@
                         diverse domains</div>
                 </div>
             </div>
-
             <div class="edu-card">
                 <div class="edu-card-accent"></div>
                 <div class="edu-degree-badge">Completed</div>
@@ -2143,13 +2134,12 @@
                         methodology</div>
                 </div>
             </div>
-
         </div>
     </section>
 
     <div class="divider"></div>
 
-    <!-- EXPERIENCE -->
+    <!-- EXPERIENCE (UPDATED BADGES) -->
     <section id="experience">
         <div class="section-header reveal">
             <h2 class="section-title">Work <em>History</em></h2>
@@ -2157,8 +2147,10 @@
         <div class="experience-list">
             <div class="exp-item reveal">
                 <div class="exp-meta">
-                    <div class="exp-period">2026</div>
-                    <span class="exp-badge">January-March</span>
+                    <div class="exp-period">
+                        <span class="exp-badge-year">2026</span>
+                    </div>
+                    <span class="exp-badge-month">January-March</span>
                 </div>
                 <div class="exp-content">
                     <div class="exp-role">AI & Machine Learning Engineer</div>
@@ -2175,9 +2167,10 @@
             </div>
             <div class="exp-item reveal">
                 <div class="exp-meta">
-                    <div class="exp-period">2025</div>
-                    <span class="exp-badge">July-August</span>
-
+                    <div class="exp-period">
+                        <span class="exp-badge-year">2025</span>
+                    </div>
+                    <span class="exp-badge-month">July-August</span>
                 </div>
                 <div class="exp-content">
                     <div class="exp-role">Machine Learning Intern</div>
@@ -2194,8 +2187,10 @@
             </div>
             <div class="exp-item reveal">
                 <div class="exp-meta">
-                    <div class="exp-period">2025</div>
-                    <span class="exp-badge">September-November</span>
+                    <div class="exp-period">
+                        <span class="exp-badge-year">2025</span>
+                    </div>
+                    <span class="exp-badge-month">September-November</span>
                 </div>
                 <div class="exp-content">
                     <div class="exp-role">AI/ML Engineer Intern</div>
@@ -2215,49 +2210,70 @@
 
     <div class="divider"></div>
 
-    <!-- CERTIFICATES -->
+    <!-- CERTIFICATES (UPDATED SPACING) -->
     <section id="certificates">
         <div class="section-header reveal">
             <h2 class="section-title">Credentials & <em>Achievements</em></h2>
         </div>
         <div class="certs-grid reveal">
             <div class="cert-card">
-                <div class="cert-issuer">Stanford Online</div>
+                <div class="logo-box" style="margin-bottom: 24px;">
+                    <span
+                        style="font-family: 'Times New Roman', Georgia, serif; font-size: 28px; font-weight: bold; color: #8C1515;">Stanford
+                        University</span>
+                </div>
                 <div class="cert-name">Machine Learning Specialization</div>
                 <div class="cert-date">Issued July 2025</div>
                 <a href="https://coursera.org/share/ccaaa8e6c4ad4302c9234957a1384bf3" target="_blank"
                     class="cert-link">View Credential →</a>
             </div>
             <div class="cert-card">
-                <div class="cert-issuer">Oracle</div>
+                <div class="logo-box" style="margin-bottom: 24px;">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/5/50/Oracle_logo.svg" alt="Oracle Logo"
+                        loading="lazy" style="max-width: 180px;" />
+                </div>
                 <div class="cert-name">Certified AI Foundations — Associate</div>
                 <div class="cert-date">Issued Aug 2025</div>
                 <a href="https://catalog-education.oracle.com/pls/certview/sharebadge?id=076DCF2C3CF7E993E743A0D02456233F1277CD42DC59C129805F07D60B437ADD"
                     target="_blank" class="cert-link">View Credential →</a>
             </div>
             <div class="cert-card">
-                <div class="cert-issuer">Microsoft</div>
+                <div class="logo-box" style="margin-bottom: 24px;">
+                    <span
+                        style="font-family: Arial, sans-serif; font-size: 28px; font-weight: bold; color: #F25022;">Microsoft</span>
+                </div>
                 <div class="cert-name">Microsoft Azure for AI and Machine Learning</div>
                 <div class="cert-date">Issued August 2025</div>
                 <a href="https://coursera.org/share/270a115b855d066c418b5d2f84df755f" target="_blank"
                     class="cert-link">View Credential →</a>
             </div>
             <div class="cert-card">
-                <div class="cert-issuer">DeepLearning.AI</div>
+                <div class="logo-box" style="margin-bottom: 24px;">
+                    <span
+                        style="font-family: Arial, sans-serif; font-size: 28px; font-weight: bold; color: #fe1b01;">DeepLearning.AI</span>
+                </div>
                 <div class="cert-name">AI For Everyone</div>
                 <div class="cert-date">Issued July 2025</div>
                 <a href="https://coursera.org/share/261b42b1d4baf8f719c6409f26e4a117" target="_blank"
                     class="cert-link">View Credential →</a>
             </div>
             <div class="cert-card">
-                <div class="cert-issuer">Johns Hopkins University</div>
+                <div class="logo-box" style="margin-bottom: 24px;">
+                    <span
+                        style="font-family: Arial, sans-serif; font-size: 28px; font-weight: bold; color: #002D72;">Johns
+                        Hopkins University</span>
+                </div>
                 <div class="cert-name">Training AI with Humans</div>
                 <div class="cert-date">Issued July 2025</div>
                 <a href="https://coursera.org/share/07e27516059229f3388147aa36604171" target="_blank"
                     class="cert-link">View Credential →</a>
             </div>
             <div class="cert-card">
-                <div class="cert-issuer">University of Michigan</div>
+                <div class="logo-box" style="margin-bottom: 24px;">
+                    <span
+                        style="font-family: 'Times New Roman', Georgia, serif; font-size: 26px; font-weight: bold; color: #ddd430;">University
+                        of Michigan</span>
+                </div>
                 <div class="cert-name">AI for Autonomous Vehicles and Robotics</div>
                 <div class="cert-date">Issued July 2025</div>
                 <a href="https://coursera.org/share/d052cca793630b18774c08b58744e049" target="_blank"
@@ -2299,10 +2315,71 @@
         (function () {
             'use strict';
 
-            /* LOADER */
+            /* ========== LOADER with Neural Background ========== */
             var loader = document.getElementById('loader');
             var bar = document.getElementById('loader-bar');
             var pctEl = document.getElementById('loader-pct');
+
+            /* Loader canvas — neural animation */
+            var lc = document.getElementById('loader-canvas');
+            var lctx = lc.getContext('2d');
+            var lW, lH, lNodes = [];
+
+            function resizeLoaderCanvas() {
+                lW = lc.width = window.innerWidth;
+                lH = lc.height = window.innerHeight;
+            }
+
+            function initLoaderNodes() {
+                lNodes = [];
+                var count = Math.min(Math.floor((lW * lH) / 14000), 90);
+                for (var i = 0; i < count; i++) {
+                    lNodes.push({
+                        x: Math.random() * lW,
+                        y: Math.random() * lH,
+                        vx: (Math.random() - 0.5) * 0.35,
+                        vy: (Math.random() - 0.5) * 0.35,
+                        r: Math.random() * 1.6 + 0.4
+                    });
+                }
+            }
+
+            var loaderAnimating = true;
+            function drawLoaderFrame() {
+                if (!loaderAnimating) return;
+                lctx.clearRect(0, 0, lW, lH);
+                for (var i = 0; i < lNodes.length; i++) {
+                    for (var j = i + 1; j < lNodes.length; j++) {
+                        var dx = lNodes[i].x - lNodes[j].x;
+                        var dy = lNodes[i].y - lNodes[j].y;
+                        var d = Math.sqrt(dx * dx + dy * dy);
+                        if (d < 140) {
+                            lctx.beginPath();
+                            lctx.strokeStyle = 'rgba(59,130,246,' + ((1 - d / 140) * 0.28) + ')';
+                            lctx.lineWidth = 0.5;
+                            lctx.moveTo(lNodes[i].x, lNodes[i].y);
+                            lctx.lineTo(lNodes[j].x, lNodes[j].y);
+                            lctx.stroke();
+                        }
+                    }
+                }
+                lNodes.forEach(function (n) {
+                    lctx.beginPath();
+                    lctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
+                    lctx.fillStyle = 'rgba(96,165,250,0.7)';
+                    lctx.fill();
+                    n.x += n.vx; n.y += n.vy;
+                    if (n.x < 0 || n.x > lW) n.vx *= -1;
+                    if (n.y < 0 || n.y > lH) n.vy *= -1;
+                });
+                requestAnimationFrame(drawLoaderFrame);
+            }
+
+            resizeLoaderCanvas();
+            initLoaderNodes();
+            drawLoaderFrame();
+
+            /* Progress bar 0 → 100 */
             var pct = 0;
             var ticker = setInterval(function () {
                 pct += 1;
@@ -2310,27 +2387,43 @@
                 pctEl.textContent = pct + '%';
                 if (pct >= 100) {
                     clearInterval(ticker);
-                    setTimeout(function () { loader.classList.add('hide'); }, 150);
+                    setTimeout(function () {
+                        loader.classList.add('hide');
+                        loaderAnimating = false;
+                    }, 150);
                 }
             }, 10);
 
-            /* Neural Canvas */
+            /* ========== Main Page Neural Canvas ========== */
             var canvas = document.getElementById('bg-canvas');
             var ctx = canvas.getContext('2d');
             var W, H, nodes = [];
-            function resize() { W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; }
+
+            function resize() {
+                W = canvas.width = window.innerWidth;
+                H = canvas.height = window.innerHeight;
+            }
+
             function initNodes() {
                 nodes = [];
                 var count = Math.min(Math.floor((W * H) / 18000), 80);
                 for (var i = 0; i < count; i++) {
-                    nodes.push({ x: Math.random() * W, y: Math.random() * H, vx: (Math.random() - 0.5) * 0.28, vy: (Math.random() - 0.5) * 0.28, r: Math.random() * 1.5 + 0.5 });
+                    nodes.push({
+                        x: Math.random() * W,
+                        y: Math.random() * H,
+                        vx: (Math.random() - 0.5) * 0.28,
+                        vy: (Math.random() - 0.5) * 0.28,
+                        r: Math.random() * 1.5 + 0.5
+                    });
                 }
             }
+
             function drawFrame() {
                 ctx.clearRect(0, 0, W, H);
                 for (var i = 0; i < nodes.length; i++) {
                     for (var j = i + 1; j < nodes.length; j++) {
-                        var dx = nodes[i].x - nodes[j].x; var dy = nodes[i].y - nodes[j].y;
+                        var dx = nodes[i].x - nodes[j].x;
+                        var dy = nodes[i].y - nodes[j].y;
                         var d = Math.sqrt(dx * dx + dy * dy);
                         if (d < 130) {
                             ctx.beginPath();
@@ -2343,16 +2436,22 @@
                     }
                 }
                 nodes.forEach(function (n) {
-                    ctx.beginPath(); ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
-                    ctx.fillStyle = 'rgba(96,165,250,0.65)'; ctx.fill();
+                    ctx.beginPath();
+                    ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
+                    ctx.fillStyle = 'rgba(96,165,250,0.65)';
+                    ctx.fill();
                     n.x += n.vx; n.y += n.vy;
                     if (n.x < 0 || n.x > W) n.vx *= -1;
                     if (n.y < 0 || n.y > H) n.vy *= -1;
                 });
                 requestAnimationFrame(drawFrame);
             }
+
             resize(); initNodes(); drawFrame();
-            window.addEventListener('resize', function () { resize(); initNodes(); });
+            window.addEventListener('resize', function () {
+                resize(); initNodes();
+                resizeLoaderCanvas(); initLoaderNodes();
+            });
 
             /* Scroll Reveal */
             var revealObs = new IntersectionObserver(function (entries) {
