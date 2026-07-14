@@ -10,7 +10,7 @@
 <br/>
 
 [![Portfolio](https://img.shields.io/badge/🌐_Portfolio-Live_Site-3b82f6?style=for-the-badge)](https://asad-aziz-001.github.io/Portfolio/)
-[![Resume](https://img.shields.io/badge/📄_Resume-Download-10b981?style=for-the-badge)](https://drive.google.com/file/d/1LXaKrstGywbnNRhPVQ4NKs8CkCbcb-BB/view)
+[![Resume](https://img.shields.io/badge/📄_Resume-Download-10b981?style=for-the-badge)](https://drive.google.com/file/d/1CZWzMYw-0BQDMITmChj-lM5igGIilKCd/view?usp=sharing)
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-0a66c2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/asad-aziz-140p/)
 [![GitHub](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/Asad-Aziz-001)
 [![Kaggle](https://img.shields.io/badge/Kaggle-20beff?style=for-the-badge&logo=kaggle&logoColor=white)](https://www.kaggle.com/asadaziz001)
