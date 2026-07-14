@@ -321,7 +321,7 @@ AI for Autonomous Vehicles & Robotics
 
 [![Gmail](https://img.shields.io/badge/_Gmail-EA4335?style=for-the-badge&logo=gmail&logoColor=white)](mailto:asadaziz40p@gmail.com)
 
-[![Resume](https://img.shields.io/badge/📄_Resume-10b981?style=for-the-badge)](https://drive.google.com/file/d/1hhRElCQ-G-dO245Trdiw1BDS06A8Ww_h/view)
+[![Resume](https://img.shields.io/badge/📄_Resume-10b981?style=for-the-badge)](https://drive.google.com/file/d/1CZWzMYw-0BQDMITmChj-lM5igGIilKCd/view?usp=sharing)
 
 [![WhatsApp](https://img.shields.io/badge/_WhatsApp-25D366?style=for-the-badge&logo=whatsapp&logoColor=white)](https://wa.me/923180003308)
 
